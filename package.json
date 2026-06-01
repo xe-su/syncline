@@ -1,0 +1,27 @@
+{
+  "name": "syncline",
+  "version": "0.1.0",
+  "description": "Offline-first sync SDK for cross-platform apps",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0",
+    "@types/node": "^20.0.0"
+  },
+  "peerDependencies": {
+    "@capacitor-community/sqlite": ">=6.0.0",
+    "better-sqlite3": ">=9.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@capacitor-community/sqlite": { "optional": true },
+    "better-sqlite3": { "optional": true }
+  }
+}
