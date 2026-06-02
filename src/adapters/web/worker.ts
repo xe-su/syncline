@@ -24,7 +24,7 @@ async function init() {
 
       if (type === 'open') {
         // @ts-expect-error sqlite-wasm dynamic import
-        const sqlite3InitModule = (await import('@sqlite.org/sqlite-wasm')).default
+        const sqlite3InitModule = (await import(/* @vite-ignore */ '@sqlite.org/sqlite-wasm')).default
         const sqlite3 = await sqlite3InitModule()
 
         if (sqlite3.oo1.OpfsDb) {

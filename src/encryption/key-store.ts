@@ -6,10 +6,12 @@ export class KeyStore {
     if (platform === 'web') {
       localStorage.setItem(`syncline:key:${dbName}`, btoa(key))
     } else if (platform === 'capacitor') {
+      // @ts-ignore — optional peer dep
       const { Preferences } = await import('@capacitor/preferences')
       await Preferences.set({ key: `syncline:key:${dbName}`, value: key })
     } else {
       try {
+        // @ts-ignore — optional peer dep
         const keytar = await import('keytar')
         await keytar.setPassword('syncline', dbName, key)
       } catch {
@@ -25,11 +27,13 @@ export class KeyStore {
       const val = localStorage.getItem(`syncline:key:${dbName}`)
       return val ? atob(val) : null
     } else if (platform === 'capacitor') {
+      // @ts-ignore — optional peer dep
       const { Preferences } = await import('@capacitor/preferences')
       const { value } = await Preferences.get({ key: `syncline:key:${dbName}` })
       return value
     } else {
       try {
+        // @ts-ignore — optional peer dep
         const keytar = await import('keytar')
         return keytar.getPassword('syncline', dbName)
       } catch {
@@ -44,10 +48,12 @@ export class KeyStore {
     if (platform === 'web') {
       localStorage.removeItem(`syncline:key:${dbName}`)
     } else if (platform === 'capacitor') {
+      // @ts-ignore — optional peer dep
       const { Preferences } = await import('@capacitor/preferences')
       await Preferences.remove({ key: `syncline:key:${dbName}` })
     } else {
       try {
+        // @ts-ignore — optional peer dep
         const keytar = await import('keytar')
         await keytar.deletePassword('syncline', dbName)
       } catch {}

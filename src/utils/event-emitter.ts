@@ -1,6 +1,7 @@
 type Listener<T> = (data: T) => void
 
-export class EventEmitter<Events extends Record<string, unknown>> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export class EventEmitter<Events extends Record<string, any>> {
   private listeners = new Map<string, Set<Listener<unknown>>>()
 
   on<K extends keyof Events & string>(event: K, listener: Listener<Events[K]>): () => void {

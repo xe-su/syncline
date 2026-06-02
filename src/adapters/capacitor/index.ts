@@ -7,6 +7,7 @@ export class CapacitorAdapter extends BaseAdapter {
 
   async open(name: string, config?: AdapterConfig): Promise<void> {
     this.dbName = name
+    // @ts-ignore — optional peer dep
     const { CapacitorSQLite } = await import('@capacitor-community/sqlite')
     this.plugin = CapacitorSQLite
     const p = this.plugin as {

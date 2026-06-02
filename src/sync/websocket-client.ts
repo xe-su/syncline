@@ -7,6 +7,7 @@ interface WSClientEvents {
   message: SyncMessage
   error: Error
   reconnecting: { attempt: number }
+  [key: string]: unknown
 }
 
 export class WebSocketClient extends EventEmitter<WSClientEvents> {

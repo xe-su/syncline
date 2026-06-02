@@ -23,6 +23,7 @@ interface SyncEngineEvents {
   change: ChangeRecord
   synced: { seq: number }
   error: Error
+  [key: string]: unknown
 }
 
 export class SyncEngine extends EventEmitter<SyncEngineEvents> {

@@ -8,6 +8,7 @@ import type { ChangeRecord } from '../types/sync'
 interface WriteQueueEvents {
   drained: DrainResult
   'item-failed': { queue_id: number; error: string }
+  [key: string]: unknown
 }
 
 export class OfflineWriteQueue extends EventEmitter<WriteQueueEvents> {

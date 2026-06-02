@@ -7,6 +7,7 @@ interface TokenManagerEvents {
   refreshed: AuthToken
   expired: void
   'refresh-failed': Error
+  [key: string]: unknown
 }
 
 export class TokenManager extends EventEmitter<TokenManagerEvents> {

@@ -12,7 +12,7 @@ export class WebAdapter extends BaseAdapter {
       console.warn('[SyncLine] OPFS not supported — falling back to in-memory SQLite')
     }
 
-    this.worker = new Worker(new URL('./worker.ts', import.meta.url), { type: 'module' })
+    this.worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' })
     this.worker.onmessage = (event: MessageEvent<{ id: string; result?: unknown; error?: string }>) => {
       const { id, result, error } = event.data
       const pending = this.pending.get(id)
@@ -20,6 +20,11 @@ export class WebAdapter extends BaseAdapter {
       this.pending.delete(id)
       if (error) pending.reject(new Error(error))
       else pending.resolve(result)
+    }
+    this.worker.onerror = (e) => {
+      console.error('[SyncLine Worker] error:', e.message)
+      for (const { reject } of this.pending.values()) reject(new Error(e.message ?? 'Worker error'))
+      this.pending.clear()
     }
 
     await this.send('open', { dbName: name, encryptionKey: config?.encryptionKey })

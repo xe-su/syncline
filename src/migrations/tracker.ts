@@ -18,7 +18,8 @@ export class MigrationTracker {
   }
 
   async getApplied(): Promise<AppliedMigration[]> {
-    return this.db.rawQuery<AppliedMigration>(`SELECT * FROM ${TABLE} ORDER BY version ASC`)
+    const rows = await this.db.rawQuery<Record<string, unknown>>(`SELECT * FROM ${TABLE} ORDER BY version ASC`)
+    return rows as unknown as AppliedMigration[]
   }
 
   async getCurrentVersion(): Promise<number> {

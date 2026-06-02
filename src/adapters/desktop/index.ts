@@ -5,6 +5,7 @@ export class DesktopAdapter extends BaseAdapter {
   private db: unknown = null
 
   async open(name: string, config?: AdapterConfig): Promise<void> {
+    // @ts-ignore — optional peer dep
     const Database = (await import('better-sqlite3')).default
     this.db = new (Database as new (path: string) => unknown)(name)
     if (config?.encryptionKey) {

@@ -13,7 +13,7 @@ export class EncryptionManager {
     const encoder = new TextEncoder()
     const keyMaterial = await crypto.subtle.importKey('raw', encoder.encode(passphrase), 'PBKDF2', false, ['deriveBits'])
     const bits = await crypto.subtle.deriveBits(
-      { name: 'PBKDF2', salt, iterations: this.config.kdfIterations ?? 256000, hash: 'SHA-256' },
+      { name: 'PBKDF2', salt: salt as BufferSource, iterations: this.config.kdfIterations ?? 256000, hash: 'SHA-256' },
       keyMaterial, 256
     )
     return Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2, '0')).join('')
