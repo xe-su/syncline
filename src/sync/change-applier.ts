@@ -4,8 +4,9 @@ import type { ChangeRecord } from '../types/sync'
 export class ChangeApplier {
   constructor(private db: DBWrapper) {}
 
-  async apply(change: ChangeRecord): Promise<void> {
-    const { table, row_id, operation, payload } = change
+  async apply(change: ChangeRecord & { table_name?: string }): Promise<void> {
+    const table = change.table ?? change.table_name
+    const { row_id, operation, payload } = change
 
     if (operation === 'DELETE') {
       await this.db.rawRun(`UPDATE "${table}" SET _deleted = 1, updated_at = ? WHERE id = ?`, [new Date().toISOString(), row_id])
@@ -29,7 +30,7 @@ export class ChangeApplier {
     }
   }
 
-  async applyBatch(changes: ChangeRecord[]): Promise<void> {
+  async applyBatch(changes: (ChangeRecord & { table_name?: string })[]): Promise<void> {
     for (const change of changes) {
       await this.apply(change)
     }
